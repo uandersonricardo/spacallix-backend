@@ -13,6 +13,9 @@ class SpaceXApi {
 
   public async upcoming(perPage: number, page: number) {
     const body = {
+      query: {
+        upcoming: true
+      },
       options: {
         limit: perPage,
         page,
