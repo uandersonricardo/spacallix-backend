@@ -74,3 +74,23 @@ export interface SpaceXLaunch {
   auto_update: boolean;
   id: string;
 }
+
+interface SpaceXQuery {
+  totalDocs: number;
+  limit: number;
+  totalPages: number;
+  page: number;
+  pagingCounter: number;
+  hasPrevPage: boolean;
+  hasNextPage: boolean;
+  prevPage: number | null;
+  nextPage: number | null;
+}
+
+export interface SpaceXLaunchQuery extends SpaceXQuery {
+  docs: SpaceXLaunch[];
+}
+
+export interface SpaceXLaunchSelectedQuery<T> extends SpaceXQuery {
+  docs: Array<Pick<SpaceXLaunch, T>>;
+}

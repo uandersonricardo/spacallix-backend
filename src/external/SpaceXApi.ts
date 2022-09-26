@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { SpaceXLaunch } from "../types/spacex";
+import { SpaceXLaunchSelectedQuery } from "../types/spacex";
 
 class SpaceXApi {
   private readonly api;
@@ -11,8 +11,18 @@ class SpaceXApi {
     });
   }
 
-  public async upcoming() {
-    const { data } = await this.api.get<SpaceXLaunch[]>("/launches/upcoming");
+  public async upcoming(perPage: number, page: number) {
+    const body = {
+      options: {
+        limit: perPage,
+        page,
+        select: ["_id", "name", "flight_number", "date_utc"]
+      }
+    };
+
+    const { data } = await this.api.post<
+      SpaceXLaunchSelectedQuery<"id" | "name" | "flight_number" | "date_utc">
+    >("/launches/query", body);
 
     return data;
   }
