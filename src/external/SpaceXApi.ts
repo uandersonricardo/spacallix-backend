@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { SpaceXLaunchSelectedQuery } from "../types/spacex";
+import { SpaceXLaunch, SpaceXLaunchSelectedQuery } from "../types/spacex";
 
 class SpaceXApi {
   private readonly api;
@@ -28,6 +28,48 @@ class SpaceXApi {
     const { data } = await this.api.post<
       SpaceXLaunchSelectedQuery<"id" | "name" | "flight_number" | "date_utc">
     >("/launches/query", body);
+
+    return data;
+  }
+
+  public async latest() {
+    const { data } = await this.api
+      .get<SpaceXLaunch>("/launches/latest")
+      .catch(err => {
+        if (err.response.status === 404) {
+          return { data: null };
+        }
+
+        throw err;
+      });
+
+    return data;
+  }
+
+  public async next() {
+    const { data } = await this.api
+      .get<SpaceXLaunch>("/launches/next")
+      .catch(err => {
+        if (err.response.status === 404) {
+          return { data: null };
+        }
+
+        throw err;
+      });
+
+    return data;
+  }
+
+  public async one(id: string) {
+    const { data } = await this.api
+      .get<SpaceXLaunch>(`/launches/${id}`)
+      .catch(err => {
+        if (err.response.status === 404) {
+          return { data: null };
+        }
+
+        throw err;
+      });
 
     return data;
   }

@@ -25,6 +25,39 @@ class LaunchesController {
 
     res.status(200).json(launches);
   }
+
+  public async latest(req: Request, res: Response) {
+    const launch = await this.launchesService.findLatest();
+
+    if (!launch) {
+      res.status(404).json({ message: "Latest launch not found" });
+      return;
+    }
+
+    res.status(200).json(launch);
+  }
+
+  public async next(req: Request, res: Response) {
+    const launch = await this.launchesService.findNext();
+
+    if (!launch) {
+      res.status(404).json({ message: "Next launch not found" });
+      return;
+    }
+
+    res.status(200).json(launch);
+  }
+
+  public async find(req: Request, res: Response) {
+    const launch = await this.launchesService.findById(req.params.id);
+
+    if (!launch) {
+      res.status(404).json({ message: "Launch not found" });
+      return;
+    }
+
+    res.status(200).json(launch);
+  }
 }
 
 export default LaunchesController;

@@ -30,7 +30,7 @@ class App {
     this.server.use(routes);
 
     this.server.use((req: Request, res: Response, next: NextFunction) => {
-      res.status(404).json({ message: "Path Not Found" });
+      res.status(404).json({ message: "Path not found" });
     });
 
     this.server.use(
