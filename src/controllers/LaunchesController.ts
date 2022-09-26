@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 
 import LaunchesService from "../services/LaunchesService";
+import { parseBoolean } from "../utils/boolean";
 
 class LaunchesController {
   private readonly launchesService;
@@ -9,22 +10,20 @@ class LaunchesController {
     this.launchesService = launchesService;
   }
 
-  public async past(req: Request, res: Response) {
+  public async paginate(req: Request, res: Response) {
     const perPage = req.query.perPage ? Number(req.query.perPage) : 10;
     const page = req.query.page ? Number(req.query.page) : 1;
+    const filter = {
+      upcoming: parseBoolean(req.query.upcoming) ?? undefined
+    };
 
-    const pastLaunches = await this.launchesService.past(perPage, page);
+    const launches = await this.launchesService.getPaginated(
+      filter,
+      perPage,
+      page
+    );
 
-    res.status(200).json(pastLaunches);
-  }
-
-  public async upcoming(req: Request, res: Response) {
-    const perPage = req.query.perPage ? Number(req.query.perPage) : 10;
-    const page = req.query.page ? Number(req.query.page) : 1;
-
-    const upcomingLaunches = await this.launchesService.upcoming(perPage, page);
-
-    res.status(200).json(upcomingLaunches);
+    res.status(200).json(launches);
   }
 }
 

@@ -8,10 +8,14 @@ class LaunchesService {
     this.spaceXApi = spaceXApi;
   }
 
-  public async past(perPage: number, page: number) {
-    const pastSpaceXLaunches = await this.spaceXApi.past(perPage, page);
+  public async getPaginated(
+    filter: { [key: string]: unknown },
+    perPage: number,
+    page: number
+  ) {
+    const spaceXLaunches = await this.spaceXApi.query(filter, perPage, page);
 
-    const launches: LaunchSummary[] = pastSpaceXLaunches.docs.map(launch => ({
+    const launches: LaunchSummary[] = spaceXLaunches.docs.map(launch => ({
       id: launch.id,
       name: launch.name,
       flightNumber: launch.flight_number,
@@ -20,31 +24,10 @@ class LaunchesService {
 
     return {
       items: launches,
-      perPage: pastSpaceXLaunches.limit,
-      page: pastSpaceXLaunches.page,
-      pageCount: pastSpaceXLaunches.totalPages,
-      total: pastSpaceXLaunches.totalDocs
-    };
-  }
-
-  public async upcoming(perPage: number, page: number) {
-    const upcomingSpaceXLaunches = await this.spaceXApi.upcoming(perPage, page);
-
-    const launches: LaunchSummary[] = upcomingSpaceXLaunches.docs.map(
-      launch => ({
-        id: launch.id,
-        name: launch.name,
-        flightNumber: launch.flight_number,
-        date: launch.date_utc
-      })
-    );
-
-    return {
-      items: launches,
-      perPage: upcomingSpaceXLaunches.limit,
-      page: upcomingSpaceXLaunches.page,
-      pageCount: upcomingSpaceXLaunches.totalPages,
-      total: upcomingSpaceXLaunches.totalDocs
+      perPage: spaceXLaunches.limit,
+      page: spaceXLaunches.page,
+      pageCount: spaceXLaunches.totalPages,
+      total: spaceXLaunches.totalDocs
     };
   }
 }

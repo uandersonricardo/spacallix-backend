@@ -11,30 +11,13 @@ class SpaceXApi {
     });
   }
 
-  public async past(perPage: number, page: number) {
+  public async query(
+    filter: { [key: string]: unknown },
+    perPage: number,
+    page: number
+  ) {
     const body = {
-      query: {
-        upcoming: false
-      },
-      options: {
-        limit: perPage,
-        page,
-        select: ["_id", "name", "flight_number", "date_utc"]
-      }
-    };
-
-    const { data } = await this.api.post<
-      SpaceXLaunchSelectedQuery<"id" | "name" | "flight_number" | "date_utc">
-    >("/launches/query", body);
-
-    return data;
-  }
-
-  public async upcoming(perPage: number, page: number) {
-    const body = {
-      query: {
-        upcoming: true
-      },
+      query: filter,
       options: {
         limit: perPage,
         page,
