@@ -16,9 +16,17 @@ class SpaceXApi {
   public async query(
     filter: { [key: string]: unknown },
     perPage: number,
-    page: number
+    page: number,
+    sort?: { [key: string]: number }
   ) {
-    const cacheKey = getCacheKey("spacex", "query", filter, perPage, page);
+    const cacheKey = getCacheKey(
+      "spacex",
+      "query",
+      filter,
+      perPage,
+      page,
+      sort
+    );
 
     if (cache.has(cacheKey)) {
       return (
@@ -46,7 +54,8 @@ class SpaceXApi {
       options: {
         limit: perPage,
         page,
-        select: ["_id", "name", "flight_number", "date_utc"]
+        select: ["_id", "name", "flight_number", "date_utc"],
+        sort
       }
     };
 

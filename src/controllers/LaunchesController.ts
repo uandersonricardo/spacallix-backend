@@ -13,14 +13,15 @@ class LaunchesController {
   public async paginate(req: Request, res: Response) {
     const perPage = req.query.perPage ? Number(req.query.perPage) : 10;
     const page = req.query.page ? Number(req.query.page) : 1;
-    const filter = {
-      upcoming: parseBoolean(req.query.upcoming) ?? undefined
-    };
+    const upcoming = parseBoolean(req.query.upcoming) ?? undefined;
+    const filter = { upcoming };
+    const sort = { date_unix: upcoming ? 1 : -1 };
 
     const launches = await this.launchesService.getPaginated(
       filter,
       perPage,
-      page
+      page,
+      sort
     );
 
     res.status(200).json(launches);

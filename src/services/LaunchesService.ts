@@ -11,9 +11,15 @@ class LaunchesService {
   public async getPaginated(
     filter: { [key: string]: unknown },
     perPage: number,
-    page: number
+    page: number,
+    sort?: { [key: string]: number }
   ) {
-    const spaceXLaunches = await this.spaceXApi.query(filter, perPage, page);
+    const spaceXLaunches = await this.spaceXApi.query(
+      filter,
+      perPage,
+      page,
+      sort
+    );
 
     const launches: LaunchSummary[] = spaceXLaunches.docs.map(launch => ({
       id: launch.id,
