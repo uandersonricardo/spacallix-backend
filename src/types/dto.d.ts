@@ -5,13 +5,11 @@ export interface Launch {
   date: string;
   details: string | null;
   success: boolean | null;
-  failures?: [
-    {
-      time: number;
-      altitude: number;
-      reason: string;
-    }
-  ];
+  failures?: Array<{
+    time: number;
+    altitude: number;
+    reason: string;
+  }>;
   links: {
     patch: {
       small: string | null;
@@ -24,8 +22,8 @@ export interface Launch {
       recovery: string | null;
     };
     flickr: {
-      small: [string];
-      original: [string];
+      small: string[];
+      original: string[];
     };
     presskit: string | null;
     webcast: string | null;

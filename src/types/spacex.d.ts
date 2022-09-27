@@ -12,44 +12,38 @@ export interface SpaceXLaunch {
   window: number | null;
   rocket: string | null;
   success: boolean | null;
-  failures?: [
-    {
-      time: number;
-      altitude: number;
-      reason: string;
-    }
-  ];
+  failures?: Array<{
+    time: number;
+    altitude: number;
+    reason: string;
+  }>;
   upcoming: boolean;
   details: string | null;
   fairings: {
     reused: boolean | null;
     recovery_attempt: boolean | null;
     recovered: boolean | null;
-    ships: [string];
+    ships: string[];
   } | null;
-  crew?: [
-    {
-      crew: string | null;
-      role: string | null;
-    }
-  ];
-  ships: [string];
-  capsules: [string];
-  payloads: [string];
+  crew?: Array<{
+    crew: string | null;
+    role: string | null;
+  }>;
+  ships: string[];
+  capsules: string[];
+  payloads: string[];
   launchpad: string | null;
-  cores: [
-    {
-      core: string | null;
-      flight: number | null;
-      gridfins: boolean | null;
-      legs: boolean | null;
-      reused: boolean | null;
-      landing_attempt: boolean | null;
-      landing_success: boolean | null;
-      landing_type: string | null;
-      landpad: string | null;
-    }
-  ];
+  cores: Array<{
+    core: string | null;
+    flight: number | null;
+    gridfins: boolean | null;
+    legs: boolean | null;
+    reused: boolean | null;
+    landing_attempt: boolean | null;
+    landing_success: boolean | null;
+    landing_type: string | null;
+    landpad: string | null;
+  }>;
   links: {
     patch: {
       small: string | null;
@@ -62,8 +56,8 @@ export interface SpaceXLaunch {
       recovery: string | null;
     };
     flickr: {
-      small: [string];
-      original: [string];
+      small: string[];
+      original: string[];
     };
     presskit: string | null;
     webcast: string | null;
