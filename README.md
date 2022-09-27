@@ -4,6 +4,8 @@
 
 O spacalliX é uma plataforma de informações sobre os lançamentos da SpaceX. Esse repositório contém o backend da aplicação, que é responsável por fazer a integração com a API da SpaceX e disponibilizar os dados para o frontend.
 
+Demo: https://api-spacallix.herokuapp.com/
+
 ## Tecnologias utilizadas
 
 - Node.js
